@@ -1,2 +1,7 @@
 {{extend 'layout.html'}}
-<h3> Welcome to {{=game.game_name}} Page!</h3>
+<h3> Welcome to {{=game.game_id.game_name}} Page!</h3>
+
+<h4> Player as viewing game: </h4>
+{{for player in playerlist:}}
+<p>{{=T(player.player_id.first_name + " " + player.player_id.last_name )}}</p>
+{{pass}}

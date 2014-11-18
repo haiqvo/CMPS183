@@ -3,8 +3,10 @@ db.define_table('game',
 	Field('game_name', 'string'),
 	Field('gametype', 'string'),
 	Field('is_over', 'boolean', represent=lambda v,r: 'Yes' if v else 'No'),
+	Field('teams', 'list:string'),
 	Field('date_started', 'datetime'),
-	Field('date_ended', 'datetime'))
+	Field('date_ended', 'datetime'),
+	format='%(game_name)s')
 
 db.game.creator.requires = IS_IN_DB(db, db.auth_user.id)
 

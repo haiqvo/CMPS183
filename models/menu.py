@@ -5,9 +5,9 @@
 ## Customize your APP title, subtitle and menus here
 #########################################################################
 
-response.logo = A(B('test',SPAN(6),'ing'),
+response.logo = A(B('Gambling',' ','Man!'),
                   _class="brand",_href=URL('default', 'index'))
-response.title = 'Gambling Man'
+response.title = 'Gambling Man!'
 response.subtitle = ''
 
 ## read more at http://dev.w3.org/html5/markup/meta.name.html
@@ -25,9 +25,8 @@ response.google_analytics_id = None
 #Edit the top part
 response.menu = [
     (T('Home'), False, URL('default', 'index'), []),
-    (T('Test'), False, URL('game_menu', 'index'), []),
-    (T('Test1'), False, URL('default', 'index'), []),
-    (T('Test2'), False, URL('default', 'index'), [])
+    (T('Join Game'), False, URL('game_menu', 'index'), []),
+    (T('My Games'), False, URL('profile', 'index'), [])
 ]
 
 DEVELOPMENT_MENU = True
@@ -41,6 +40,7 @@ def _():
     app = request.application
     ctr = request.controller
     # useful links to internal and external resources
+    """
     response.menu += [
         (SPAN('web2py', _class='highlighted'), False, 'http://web2py.com', [
         (T('My Sites'), False, URL('admin', 'default', 'site')),
@@ -138,6 +138,7 @@ def _():
                         ])
                 ]
          )]
+      """
 if DEVELOPMENT_MENU: _()
 
 if "auth" in locals(): auth.wikimenu() 
