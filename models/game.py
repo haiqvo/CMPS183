@@ -2,7 +2,7 @@ db.define_table('game',
 	Field('creator', db.auth_user),
 	Field('game_name', 'string'),
 	Field('gametype', 'string'),
-	Field('is_over', 'boolean'),
+	Field('is_over', 'boolean', represent=lambda v,r: 'Yes' if v else 'No'),
 	Field('date_started', 'datetime'),
 	Field('date_ended', 'datetime'))
 
