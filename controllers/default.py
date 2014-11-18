@@ -9,6 +9,7 @@
 ## - api is an example of Hypermedia API support and access control
 #########################################################################
 
+@auth.requires_login() 
 def index():
     """
     example action using the internationalization operator T and flash
@@ -17,7 +18,7 @@ def index():
     if you need a simple wiki simply replace the two lines below with:
     return auth.wiki()
     """
-    response.flash = T("Welcome to web2py!")
+    
     return dict(message=T('Hello World'))
 
 
