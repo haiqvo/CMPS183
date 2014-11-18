@@ -1,5 +1,5 @@
 (dp1
-S'game_id'
+S'player_id'
 p2
 (dp3
 S'length'
@@ -10,19 +10,19 @@ p5
 I00
 sS'sortable'
 p6
-I2
+I3
 sS'sql'
 p7
-S'INTEGER REFERENCES game (id) ON DELETE CASCADE'
+S'INTEGER REFERENCES auth_user (id) ON DELETE CASCADE'
 p8
 sS'notnull'
 p9
 I00
 sS'type'
 p10
-S'reference game'
+S'reference auth_user'
 p11
-ssS'amount_bet'
+ssS'game_id'
 p12
 (dp13
 g4
@@ -30,18 +30,35 @@ I512
 sg5
 I00
 sg6
-I3
+I2
 sg7
-S'INTEGER'
+S'INTEGER REFERENCES game (id) ON DELETE CASCADE'
 p14
 sg9
 I00
 sg10
-S'integer'
+S'reference game'
 p15
-ssS'id'
+ssS'amount_bet'
 p16
 (dp17
+g4
+I512
+sg5
+I00
+sg6
+I4
+sg7
+S'INTEGER'
+p18
+sg9
+I00
+sg10
+S'integer'
+p19
+ssS'id'
+p20
+(dp21
 g4
 I512
 sg5
@@ -50,26 +67,27 @@ sg6
 I1
 sg7
 S'INTEGER PRIMARY KEY AUTOINCREMENT'
-p18
+p22
 sg9
 I00
 sg10
-g16
+S'id'
+p23
 ssS'win'
-p19
-(dp20
+p24
+(dp25
 g4
 I512
 sg5
 I00
 sg6
-I4
+I5
 sg7
 S'CHAR(1)'
-p21
+p26
 sg9
 I00
 sg10
 S'boolean'
-p22
+p27
 ss.
