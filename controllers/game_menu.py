@@ -11,6 +11,7 @@ def index():
 		csv=False,
 		links = [lambda row: A('Join',_href=URL("game_menu","join",args=[row.id]))]
 		)
+	
 	return dict(message=T('Hi ' + first_name), grid=grid)
 
 @auth.requires_login() 
@@ -32,4 +33,6 @@ def join():
 def game():
 	game = db.game_play(request.args(0,cast=int)) or redirect(URL("game_menu", "index"))
 	playerlist = db(db.game == game.game_id).select(db.game_play.ALL, orderby=db.game_play.player_id)
-	return dict(message=T('testing'), game=game, playerlist=playerlist)
+	form_field = ['who', 'amount_bet']
+	form = SQLFORM(db.game_play, game, fields=form_field)
+	return dict(message=T('testing'), game=game, playerlist=playerlist, form=form)
