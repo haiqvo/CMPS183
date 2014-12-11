@@ -9,7 +9,7 @@ db.define_table('game',
 	Field('winner', 'string'),
 	format='%(game_name)s')
 
-db.game.creator.requires = IS_IN_DB(db, db.auth_user.id)
+db.game.creator.requires = IS_EMPTY_OR(IS_IN_DB(db, db.auth_user.id))
 
 db.define_table('game_play',
 	Field('game_id', db.game),

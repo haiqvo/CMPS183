@@ -1,0 +1,21 @@
+(dp1
+S'output'
+p2
+S"<type 'exceptions.UnboundLocalError'> local variable 'result' referenced before assignment"
+p3
+sS'layer'
+p4
+S'/home/hai/Projects/web2py/applications/FinalProject/controllers/default.py'
+p5
+sS'code'
+p6
+S'# -*- coding: utf-8 -*-\n# this file is released under public domain and you can use without limitations\n\n#########################################################################\n## This is a sample controller\n## - index is the default action of any application\n## - user is required for authentication and authorization\n## - download is for downloading files uploaded in the db (does streaming)\n## - api is an example of Hypermedia API support and access control\n#########################################################################\nimport datetime\nimport random \n@auth.requires_login() \ndef index():\n    """\n    example action using the internationalization operator T and flash\n    rendered by views/default/index.html or views/generic.html\n\n    if you need a simple wiki simply replace the two lines below with:\n    return auth.wiki()\n    """\n    date = request.now\n    bot_game = db(db.game.creator==None).count()\n    print bot_game\n    if bot_game == 0:\n        bot()\n    all_games = db(db.game.id>0).select()\n    for game in all_games:\n        if game.creator == None:\n            if date > game.date_ended:\n                result = result()\n                game.update_record(is_over=True, winner=this.result)\n                bot()\n        if date > game.date_ended:\n            game.update_record(is_over=True) \n    return dict(message=T(\'Hello World\'))\n\n\ndef bot():\n    current_time = request.now\n    end_time = current_time + datetime.timedelta(minutes=2)\n    db.game.insert(game_name="Bot Game", gametype="coin flip", is_over=False, teams=["Heads","Tails"], \n        date_started = current_time, date_ended = end_time)\n    #bot_game = db(db.game.creator == None).select()[0]\n\ndef result():\n    number = random.randint(0,100)\n    if number % 2 == 0:\n        result = "Heads"\n    else:\n        result = "Tails"\n    return result\n\n\ndef user():\n    """\n    exposes:\n    http://..../[app]/default/user/login\n    http://..../[app]/default/user/logout\n    http://..../[app]/default/user/register\n    http://..../[app]/default/user/profile\n    http://..../[app]/default/user/retrieve_password\n    http://..../[app]/default/user/change_password\n    http://..../[app]/default/user/manage_users (requires membership in\n    use @auth.requires_login()\n        @auth.requires_membership(\'group name\')\n        @auth.requires_permission(\'read\',\'table name\',record_id)\n    to decorate functions that need access control\n    """\n    return dict(form=auth())\n\n\n@cache.action()\ndef download():\n    """\n    allows downloading of uploaded files\n    http://..../[app]/default/download/[filename]\n    """\n    return response.download(request, db)\n\n\ndef call():\n    """\n    exposes services. for example:\n    http://..../[app]/default/call/jsonrpc\n    decorate with @services.jsonrpc the functions to expose\n    supports xml, json, xmlrpc, jsonrpc, amfrpc, rss, csv\n    """\n    return service()\n\n\n@auth.requires_login() \ndef api():\n    """\n    this is example of API with access control\n    WEB2PY provides Hypermedia API (Collection+JSON) Experimental\n    """\n    from gluon.contrib.hypermedia import Collection\n    rules = {\n        \'<tablename>\': {\'GET\':{},\'POST\':{},\'PUT\':{},\'DELETE\':{}},\n        }\n    return Collection(db).process(request,response,rules)\n\nresponse._vars=response._caller(index)\n'
+p7
+sS'snapshot'
+p8
+(dp9
+sS'traceback'
+p10
+S'Traceback (most recent call last):\n  File "/home/hai/Projects/web2py/gluon/restricted.py", line 224, in restricted\n    exec ccode in environment\n  File "/home/hai/Projects/web2py/applications/FinalProject/controllers/default.py", line 104, in <module>\n  File "/home/hai/Projects/web2py/gluon/globals.py", line 392, in <lambda>\n    self._caller = lambda f: f()\n  File "/home/hai/Projects/web2py/gluon/tools.py", line 3439, in f\n    return action(*a, **b)\n  File "/home/hai/Projects/web2py/applications/FinalProject/controllers/default.py", line 31, in index\n    result = result()\nUnboundLocalError: local variable \'result\' referenced before assignment\n'
+p11
+s.

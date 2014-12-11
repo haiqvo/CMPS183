@@ -1,17 +1,38 @@
 {{left_sidebar_enabled,right_sidebar_enabled=False,('message' in globals())}}
 {{extend 'layout.html'}}
-<h3> Welcome to {{=game.game_id.game_name}} Page!</h3>
+<h3>{{=game.game_id.game_name}} playing {{=game.game_id.gametype}}</h3>
 
 
 <ol>
-{{=form}}
-</ol>
+<form id="bet_form" action="{{=URL('game_menu', 'form_submit')}}" method="post">
+Team:
+<select name="teamlist">
+{{for team in game_team:}}
+	<option value={{=team}}>{{=team}}</option>
+{{pass}}
+</select>
+<br>
+Value:
+<input name="value" type="text">
+<br>
+<input type="hidden" name="game_id" value={{=game.id}}>
+<input type="submit">
+</form>
 
 {{block right_sidebar}}
 <ul>
+{{if game.game_id.creator == None:}}
+<h4> The Creator is A Bot!</h4>
+{{else:}}
+<h4> The Creator is {{=game.game_id.creator.first_name}} </h4>
+{{pass}}
+
 <h4> Player is also viewing game: </h4>
 {{for player in playerlist:}}
 <p>{{=T(player.player_id.first_name + " " + player.player_id.last_name )}}</p>
 {{pass}}
 </ul>
 {{end}}
+{{if game.who != None:}}
+<h4> You are currently betting {{=game.amount_bet}} on {{=game.who}}</h4>
+{{pass}} 

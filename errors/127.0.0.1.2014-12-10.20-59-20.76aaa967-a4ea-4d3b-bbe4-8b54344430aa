@@ -1,0 +1,21 @@
+(dp1
+S'output'
+p2
+S"<type 'exceptions.TypeError'> URL() got an unexpected keyword argument 'agrs'"
+p3
+sS'layer'
+p4
+S'/home/hai/Projects/web2py/applications/FinalProject/controllers/game_menu.py'
+p5
+sS'code'
+p6
+S'# This controller will be used to display the list of open game to join\n\n@auth.requires_login() \ndef index():\n\tfirst_name = auth.user.first_name\n\tgrid = SQLFORM.grid(db.game.is_over==False,\n\t\tfields=[db.game.game_name, db.game.creator, db.game.is_over, db.game.date_started, db.game.date_ended],\n\t\tdeletable=False,\n\t\teditable=False,\n\t\tdetails=False,\n\t\tcsv=False,\n\t\tlinks = [lambda row: A(\'Join\',_href=URL("game_menu","join",args=[row.id]))]\n\t\t)\n\t\n\treturn dict(message=T(\'Hi \' + first_name), grid=grid)\n\n@auth.requires_login() \ndef join():\n\tform=FORM(INPUT(_type=\'submit\', _value=\'Yes\'))\n\tform.add_button(\'No\', URL("game_menu","index"))\n\tif form.accepts(request, session):\n\t\tgame = db.game(request.args(0,cast=int))\n\t\tplayer_game = db((db.game_play.player_id == auth.user)&(db.game_play.game_id == game)).select(db.game_play.ALL).first()\n\t\tif player_game is None:\n\t\t\tgame_id = db.game_play.insert(game_id=game, player_id=auth.user, amount_bet=0, win=False)\n\t\t\tredirect(URL("game_menu","game",args=[game_id]))\n\t\telse:\n\t\t\tplayer_game.update(game_id=game)\n\t\t\tredirect(URL("game_menu","game",args=[player_game.id]))\t\n\treturn dict(form=form)\n\n@auth.requires_login()\ndef game():\n\tgame = db.game_play(request.args(0,cast=int)) or redirect(URL("game_menu", "index"))\n\tgame_team = db.game(game.game_id).teams\n\tplayerlist = db(db.game == game.game_id).select(db.game_play.ALL, orderby=db.game_play.player_id)\n\tform_field = [\'who\', \'amount_bet\']\n\tform = SQLFORM(db.game_play, game, fields=form_field)\n\treturn dict(message=T(\'testing\'), game=game, playerlist=playerlist, form=form, game_team=game_team)\n\n@auth.requires_login()\ndef form_submit():\n\tprint request.vars\n\tredirect(URL("game_menu", "game",agrs=request.vars.game_id))\nresponse._vars=response._caller(form_submit)\n'
+p7
+sS'snapshot'
+p8
+(dp9
+sS'traceback'
+p10
+S'Traceback (most recent call last):\n  File "/home/hai/Projects/web2py/gluon/restricted.py", line 224, in restricted\n    exec ccode in environment\n  File "/home/hai/Projects/web2py/applications/FinalProject/controllers/game_menu.py", line 45, in <module>\n  File "/home/hai/Projects/web2py/gluon/globals.py", line 392, in <lambda>\n    self._caller = lambda f: f()\n  File "/home/hai/Projects/web2py/gluon/tools.py", line 3439, in f\n    return action(*a, **b)\n  File "/home/hai/Projects/web2py/applications/FinalProject/controllers/game_menu.py", line 44, in form_submit\n    redirect(URL("game_menu", "game",agrs=request.vars.game_id))\nTypeError: URL() got an unexpected keyword argument \'agrs\'\n'
+p11
+s.

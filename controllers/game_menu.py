@@ -32,7 +32,14 @@ def join():
 @auth.requires_login()
 def game():
 	game = db.game_play(request.args(0,cast=int)) or redirect(URL("game_menu", "index"))
-	playerlist = db(db.game == game.game_id).select(db.game_play.ALL, orderby=db.game_play.player_id)
+	game_team = db.game(game.game_id).teams
+	playerlist = db(db.game_play.game_id == game.game_id).select(db.game_play.ALL, orderby=db.game_play.player_id)
 	form_field = ['who', 'amount_bet']
 	form = SQLFORM(db.game_play, game, fields=form_field)
-	return dict(message=T('testing'), game=game, playerlist=playerlist, form=form)
+	return dict(message=T('testing'), game=game, playerlist=playerlist, form=form, game_team=game_team)
+
+@auth.requires_login()
+def form_submit():
+	db.game_play(int(request.vars.game_id)).update_record(amount_bet=int(request.vars.value), who=request.vars.teamlist)
+	print request.vars
+	redirect(URL("game_menu", "game",args=request.vars.game_id))
