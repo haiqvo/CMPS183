@@ -29,3 +29,5 @@ db.define_table('team',
 	Field('game_id', db.game),
 	Field('name', 'string'),
 	Field('description', 'text'))
+
+

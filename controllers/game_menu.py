@@ -2,6 +2,7 @@
 
 @auth.requires_login() 
 def index():
+	scheduler.queue_task('demo1', period=60)
 	first_name = auth.user.first_name
 	grid = SQLFORM.grid(db.game.is_over==False,
 		fields=[db.game.game_name, db.game.creator, db.game.is_over, db.game.date_started, db.game.date_ended],
@@ -16,6 +17,7 @@ def index():
 
 @auth.requires_login() 
 def join():
+	scheduler.queue_task('demo1', period=60)
 	form=FORM(INPUT(_type='submit', _value='Yes'))
 	form.add_button('No', URL("game_menu","index"))
 	if form.accepts(request, session):
@@ -31,6 +33,7 @@ def join():
 
 @auth.requires_login()
 def game():
+	scheduler.queue_task('demo1', period=60)
 	game = db.game_play(request.args(0,cast=int)) or redirect(URL("game_menu", "index"))
 	game_team = db.game(game.game_id).teams
 	playerlist = db(db.game_play.game_id == game.game_id).select(db.game_play.ALL, orderby=db.game_play.player_id)
